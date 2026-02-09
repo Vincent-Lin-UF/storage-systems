@@ -5,6 +5,7 @@ public class Server {
   private Socket s = null;
   private ServerSocket ss = null;
   private DataInputStream in = null;
+  private DataOutputStream out = null;
 
   public Server(int port) {
     try {
@@ -16,12 +17,22 @@ public class Server {
       System.out.println("Client Accepted.");
 
       in = new DataInputStream(new BufferedInputStream(s.getInputStream()));
+      out = new DataOutputStream(s.getOutputStream());
 
       String m = "";
       while (!m.equals("bye")) {
         try {
           m = in.readUTF();
           System.out.println(m);
+          // Validation
+          if (isAlpha(m)) {
+            System.out.println(m.toUpperCase());
+          } else {
+            System.out.println("Try Again.");
+          }
+          
+
+
         } catch (IOException i) {
           System.out.println(i);
         }
@@ -33,6 +44,11 @@ public class Server {
     } catch (IOException i) {
       System.out.println(i);
     }
+  }
+
+  public static boolean isAlpha(String s) {
+    if (s == null || s.isEmpty()) return false;
+    return s.chars().allMatch(Character::isAlphabetic);
   }
 
   public static void main(String[] args) {
