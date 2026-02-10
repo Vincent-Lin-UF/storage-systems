@@ -8,9 +8,10 @@ public class Server {
   private DataOutputStream out = null;
 
   public Server(int port) {
+    // Network Connection
     try {
       ss = new ServerSocket(port);
-      System.out.println("Server Started.");
+      System.out.println("Server Started on " + InetAddress.getLocalHost().getHostAddress());
       System.out.println("Waiting for client...");
 
       s = ss.accept();
