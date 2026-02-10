@@ -43,6 +43,14 @@ public class Client {
   }
 
   public static void main(String[] args) {
-    Client c = new Client("127.0.0.1",5000);
+    if (args.length > 1) {
+      System.out.println("Need  only 1 argument");
+    } 
+    String serverIp = "127.0.0.1";
+    if (args.length == 1) {
+      serverIp = args[0];
+    }
+    System.out.println("Connecting to: " + serverIp);
+    Client c = new Client(serverIp,5000);
   }
 }
