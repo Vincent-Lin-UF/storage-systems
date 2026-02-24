@@ -2,48 +2,60 @@ import java.io.*;
 import java.net.*;
 
 public class Server {
-  private Socket s = null;
-  private ServerSocket ss = null;
+  private Socket socket = null;
+  private ServerSocket server = null;
   private DataInputStream in = null;
   private DataOutputStream out = null;
 
   public Server(int port) {
     // Network Connection
     try {
-      ss = new ServerSocket(port);
+      server = new ServerSocket(port);
       System.out.println("Server Started on " + InetAddress.getLocalHost().getHostAddress());
       System.out.println("Waiting for client...");
 
-      s = ss.accept();
+      socket = server.accept();
       System.out.println("Client Accepted.");
 
-      in = new DataInputStream(new BufferedInputStream(s.getInputStream()));
-      out = new DataOutputStream(s.getOutputStream());
+      in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+      out = new DataOutputStream(socket.getOutputStream());
 
-      String m = "";
-      while (!m.equals("bye")) {
+      out.writeUTF("Hello!");
+
+      String message = "";
+
+      while (true) {
         try {
-          m = in.readUTF();
-          System.out.println(m);
-          // Validation
-          if (isAlpha(m)) {
-            System.out.println(m.toUpperCase());
-          } else {
-            System.out.println("Try Again.");
-          }
-          
+          message = in.readUTF();
+          System.out.println("Client: " + message);
 
+          if (message.equalsIgnoreCase("bye")) {
+              out.writeUTF("disconnected");
+              break;
+          }
+
+          if (isAlpha(message)) {
+              String result = message.toUpperCase();
+              out.writeUTF(result);
+          } else {
+              out.writeUTF("Error: alphabets only. Try again.");
+          }
 
         } catch (IOException i) {
-          System.out.println(i);
+          System.out.println("Connect error: " + i);
+          break;
         }
       }
-      System.out.println("Server closing.");
 
-      s.close();
+      System.out.println("Server closing connection.");
+
+      socket.close();
       in.close();
+      out.close();
+      server.close();
+
     } catch (IOException i) {
-      System.out.println(i);
+      System.out.println("Server error: "+ i);
     }
   }
 
@@ -53,6 +65,13 @@ public class Server {
   }
 
   public static void main(String[] args) {
-    Server s = new Server(5000);
+
+    int port = 5000;
+
+    if (args.length == 1) {
+      port = Integer.parseInt(args[0]);
+    }
+    
+    new Server(port);
   }
 }
