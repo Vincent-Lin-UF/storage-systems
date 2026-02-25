@@ -2,7 +2,7 @@
 
 This project implements a simple TCP client/server system in Java using sockets.
 
-The server validates alphabet-only strings received from the client, converts valid strings to uppercase, and sends the result back.  
+The server validates alphabet-only strings received from the client, converts valid strings to uppercase, and sends the result back.
 The client measures round-trip time (RTT) for each request and reports statistics.
 
 This project was created for CIS4930 – Internet Storage Systems.
@@ -35,7 +35,9 @@ This will generate Server.class & Client.class
 Now on Computer A (Server)
 
 Run:
-    ipconfig getifaddr en0 - to get target ip
+    macOS:   ipconfig getifaddr en0  (to get target ip)
+    Linux:   ip addr show  (to get target ip, look for inet under your active interface)
+    Windows: ipconfig  (to get target ip, look for IPv4 Address)
     java Server <last_4_digits_of_UFID>
 
 On Computer B (Client)
