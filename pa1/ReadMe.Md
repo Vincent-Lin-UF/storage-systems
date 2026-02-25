@@ -27,27 +27,34 @@ This project was created for CIS4930 – Internet Storage Systems.
 
 Compile both files:
 
+```
 javac Server.java
 javac Client.java
+```
 
 This will generate Server.class & Client.class
 
 Now on Computer A (Server)
 
 Run:
-    macOS:   ipconfig getifaddr en0  (to get target ip)
-    Linux:   ip addr show  (to get target ip, look for inet under your active interface)
-    Windows: ipconfig  (to get target ip, look for IPv4 Address)
-    java Server <last_4_digits_of_UFID>
+- macOS: `ipconfig getifaddr en0`
+- Linux: `ip addr show` (look for inet under your active interface)
+- Windows: `ipconfig` (look for IPv4 Address)
+
+Then start the server:
+```
+java Server <last_4_digits_of_UFID>
+```
 
 On Computer B (Client)
 
-Run:
-    java Client <server_ip> <last_4_digits_of_UFID>
+```
+java Client <server_ip> <last_4_digits_of_UFID>
+```
 
-Send alphabetical inputs as client and enure they reach the host server
+Send alphabetical inputs as client and ensure they reach the host server
 
 To close the connection - As client type "bye"
 Once connection is severed host will respond with "disconnected"
 
-after the connection ends round trip statistics will be displayed on the client side.
+After the connection ends round trip statistics will be displayed on the client side.
