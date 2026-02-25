@@ -61,7 +61,7 @@ public class Server {
 
   public static boolean isAlpha(String s) {
     if (s == null || s.isEmpty()) return false;
-    return s.chars().allMatch(Character::isAlphabetic);
+    return s.matches("[a-zA-Z]+");
   }
 
   public static void main(String[] args) {
